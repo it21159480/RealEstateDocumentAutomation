@@ -25,7 +25,7 @@ def run_berkeley_agent(tms_number):
         page.goto("https://berkeleycountysc.gov/propcards/prop_card_search.php")
         page.fill("#tms", tms_number)
         page.click("text='Retrieve Property Card'")
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(30000)
         prop_card_path = os.path.join(folder, "Property Card.pdf")
         save_pdf_from_html(page, prop_card_path)
 
@@ -46,20 +46,20 @@ def run_berkeley_agent(tms_number):
         page.goto("https://taxes.berkeleycountysc.gov/#/WildfireSearch")
         page.fill("input[name='search']", tms_number)
         page.keyboard.press("Enter")
-        page.wait_for_timeout(4000)
+        page.wait_for_timeout(40000)
         page.click("text='View'")
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(30000)
 
         try:
             page.click("text='View & Print Bill'")
-            page.wait_for_timeout(2000)
+            page.wait_for_timeout(20000)
             save_pdf_from_html(page, os.path.join(folder, "Tax Bill.pdf"))
         except:
             pass
 
         try:
             page.click("text='View & Print Receipt'")
-            page.wait_for_timeout(2000)
+            page.wait_for_timeout(20000)
             save_pdf_from_html(page, os.path.join(folder, "Tax Receipt.pdf"))
         except:
             pass
@@ -74,11 +74,11 @@ def run_berkeley_agent(tms_number):
             page.fill("#booknum", book)
             page.fill("#pagenum", page_num.zfill(3))
             page.click("text='Search'")
-            page.wait_for_timeout(3000)
+            page.wait_for_timeout(30000)
 
             try:
                 page.click("text='View'")
-                page.wait_for_timeout(3000)
+                page.wait_for_timeout(30000)
                 deed_path = os.path.join(folder, f"DB {book} {page_num.zfill(3)}.pdf")
                 save_pdf_from_html(page, deed_path)
             except:

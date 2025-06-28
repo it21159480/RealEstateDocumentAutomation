@@ -21,16 +21,16 @@ def run_charleston_agent(tms_number):
 
         # Step 1-3: Navigate to the search page
         page.goto("https://sc-charleston.publicaccessnow.com/RealPropertyRecordSearch.aspx")
-        page.wait_for_timeout(2000)
+        page.wait_for_timeout(20000)
 
         # Step 4: Input TMS
         page.fill("#ctl00_ContentPlaceHolder1_txtParcelID", tms_number)
         page.keyboard.press("Enter")
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(30000)
 
         # Step 5: Click view details
         page.click("text='View Details'")
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(30000)
 
         folder = create_folder(tms_number)
 
@@ -54,7 +54,7 @@ def run_charleston_agent(tms_number):
 
         # Step 8: Click Tax Info and save as PDF
         page.click("text='Tax Info'")
-        page.wait_for_timeout(3000)
+        page.wait_for_timeout(30000)
         tax_info_path = os.path.join(folder, "Tax Info.pdf")
         save_pdf_from_html(page, tax_info_path)
 
@@ -65,11 +65,11 @@ def run_charleston_agent(tms_number):
             page.fill("#page", page_num.zfill(3))
             page.check("#accept")
             page.click("#submit")
-            page.wait_for_timeout(3000)
+            page.wait_for_timeout(30000)
 
             try:
                 page.click("text='View'")
-                page.wait_for_timeout(3000)
+                page.wait_for_timeout(30000)
                 deed_path = os.path.join(folder, f"DB {book} {page_num.zfill(3)}.pdf")
                 save_pdf_from_html(page, deed_path)
                 page.go_back()
