@@ -130,5 +130,12 @@ output/
 - Add download retry logic or reCAPTCHA challenge bypass
 
 ---
+## 🎥 Demo Video
 
+Watch how the automation agent works:
+
+🎬 [View Demo on Google Drive](https://drive.google.com/file/d/1P_B_8o8XHvEAcOL6MDVMtFWwetDfi1Ba/view?usp=sharing)
+
+> Demonstrates TMS search, document retrieval, and PDF export flow.
+---
 
