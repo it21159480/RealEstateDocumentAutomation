@@ -125,13 +125,11 @@ def run_charleston_agent(tms_number):
         # print(f"Saved Tax Info PDF from {tax_url}")
 
         book_pages = [("1247","453"),("0799","591"),("0310","940")]
-        browser_second = p.chromium.launch(headless=True,)
-        new_context = browser_second.new_context()
+       
         # Step 9-15: Go to Register of Deeds and download deeds
         for book, page_num in book_pages:
             try:
-
-                newTab = new_context.new_page()
+                newTab = context.new_page()
                 newTab.goto("https://www.charlestoncounty.org/departments/rod/ds-DMBookandPage.php")
                 newTab.wait_for_timeout(20000)
                 print("Navigated to Register of Deeds newTab.")
@@ -166,20 +164,10 @@ def run_charleston_agent(tms_number):
                 deed_url = new_page.url
                 print(f"Deed URL: {deed_url}")
                 deed_path = os.path.join(folder, f"DB {book} {page_num.zfill(3)}.pdf")
-                pdf_url = new_page.evaluate("() => window.PDFViewerApplication?.url")
-                if pdf_url:
-                    print(f"[→] Attempting to fetch actual PDF from viewer URL: {pdf_url}")
-                    download_binary_pdf(pdf_url, deed_path)
-                else:
-                    print("[⚠] PDF URL not found in viewer. Falling back to page.pdf().")
-                    new_page.pdf(path=deed_path, format="A4")
-                    print(f"[✓] Saved deed via rendered PDF: {deed_path}")
-                # # Save the full visible page as a PDF (headless mode required)
-                # new_page.pdf(path=deed_path, format="A4", print_background=True)
-                # print(f"[✓] Saved deed PDF via page.pdf(): {deed_path}")
-                # path = os.path.join(folder, f"DB {book}.pdf")
-                # save_pdf_from_html(new_page, path)
-                # print(f"[✓] Saved deed PDF via save_pdf_from_html(): {path}")
+                # Save the full visible page as a PDF (headless mode required)
+                new_page.pdf(path=deed_path, format="A4", print_background=True)
+                print(f"[✓] Saved deed PDF via page.pdf(): {deed_path}")
+
 
 
                 # Extract PDF bytes directly from browser context
