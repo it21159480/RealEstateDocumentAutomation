@@ -17,13 +17,13 @@ def process_all():
         except Exception as e:
             print(f"Charleston error with TMS {tms}: {e}")
 
-    print("\nStarting Berkeley County processing...")
-    for tms in tms_data['Berkeley County'].dropna():
-        try:
-            print(f"Processing TMS: {tms}")
-            run_berkeley_agent(str(tms).strip())
-        except Exception as e:
-            print(f"Berkeley error with TMS {tms}: {e}")
+    # print("\nStarting Berkeley County processing...")
+    # for tms in tms_data['Berkeley County'].dropna():
+    #     try:
+    #         print(f"Processing TMS: {tms}")
+    #         run_berkeley_agent(str(tms).strip())
+    #     except Exception as e:
+    #         print(f"Berkeley error with TMS {tms}: {e}")
 
 if __name__ == "__main__":
     process_all()
