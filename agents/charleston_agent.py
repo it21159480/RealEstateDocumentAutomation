@@ -200,5 +200,4 @@ def run_charleston_agent(tms_number):
 
         browser.close()
 
-# if __name__ == "__main__":
-#     run_charleston_agent("5590200072")
+
