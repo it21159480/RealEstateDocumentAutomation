@@ -53,78 +53,77 @@ def run_charleston_agent(tms_number):
 
 
         # Step 1: Go to Charleston County Online Services page
-        # page.goto("https://www.charlestoncounty.org/online-services.php")
-        # print("Navigated to Charleston County Online Services page.")
-        # page.wait_for_timeout(20000)
-        # # Step 2: Click on “Pay Taxes & View Records”
-        # page.click("h3:text('Pay Taxes & View Records')")
-        # print("Clicked on 'Pay Taxes & View Records'.")
-        # page.wait_for_timeout(120000)
-        # # Step 3: Click on “Real Property Record Search”
-        # page.click("a:text('Real Property Record Search')")
-        # print("Clicked on 'Real Property Record Search'.")
-        # page.wait_for_timeout(20000)
+        page.goto("https://www.charlestoncounty.org/online-services.php")
+        print("Navigated to Charleston County Online Services page.")
+        page.wait_for_timeout(20000)
+        # Step 2: Click on “Pay Taxes & View Records”
+        page.click("h3:text('Pay Taxes & View Records')")
+        print("Clicked on 'Pay Taxes & View Records'.")
+        page.wait_for_timeout(120000)
+        # Step 3: Click on “Real Property Record Search”
+        page.click("a:text('Real Property Record Search')")
+        print("Clicked on 'Real Property Record Search'.")
+        page.wait_for_timeout(20000)
         
-        # page.wait_for_load_state("load")
+        page.wait_for_load_state("load")
 
-        # # Step 4: Input TMS
-        # page.fill("input[aria-label='PIN']", tms_number)
-        # page.keyboard.press("Enter")
-        # print(f"Entered TMS number: {tms_number}")
-        # page.wait_for_timeout(10000)
+        # Step 4: Input TMS
+        page.fill("input[aria-label='PIN']", tms_number)
+        page.keyboard.press("Enter")
+        print(f"Entered TMS number: {tms_number}")
+        page.wait_for_timeout(10000)
         
 
-        # # Step 5: Click view details
-        # page.wait_for_selector("a[title^='View Details']")
-        # page.click("a[title^='View Details']")
-        # print("Clicked on 'View Details'.")
-        # page.wait_for_timeout(20000)
+        # Step 5: Click view details
+        page.wait_for_selector("a[title^='View Details']")
+        page.click("a[title^='View Details']")
+        print("Clicked on 'View Details'.")
+        page.wait_for_timeout(20000)
         
 
         folder = create_folder(tms_number)
         print(f"Created folder: {folder}")
 
-        # # Step 6: Save current Property Card URL and use pdfkit
-        # property_url = page.url
-        # save_pdf_from_url(property_url, os.path.join(folder, "Property Card.pdf"))
-        # print(f"Saved Property Card PDF at {os.path.join(folder, 'Property Card.pdf')}")
+        # Step 6: Save current Property Card URL and use pdfkit
+        property_url = page.url
+        save_pdf_from_url(property_url, os.path.join(folder, "Property Card.pdf"))
+        print(f"Saved Property Card PDF at {os.path.join(folder, 'Property Card.pdf')}")
 
       
 
-        # # Step 7: Scrape Book and Page from updated sales table
-        # # Wait until the correct module and table are loaded
-        # page.wait_for_selector("div.DnnModule-ProValSalesHistory table.ui-widget-content.ui-table > tbody > tr td")
+        # Step 7: Scrape Book and Page from updated sales table
+        # Wait until the correct module and table are loaded
+        page.wait_for_selector("div.DnnModule-ProValSalesHistory table.ui-widget-content.ui-table > tbody > tr td")
 
-        # # Scope to the correct module only
-        # sales_history_module = page.locator("div.DnnModule-ProValSalesHistory")
-        # sales_rows = sales_history_module.locator("table.ui-widget-content.ui-table > tbody > tr")
-        # print(f"Found {sales_rows.count()} rows in the sales table.")
-        # book_pages = []
-        # for i in range(sales_rows.count()):
-        #     row = sales_rows.nth(i)
-        #     try:
-        #         book = row.locator("td").nth(0).inner_text().strip()
-        #         page.wait_for_timeout(5000)
-        #         page_num = row.locator("td").nth(1).inner_text().strip()
-        #         page.wait_for_timeout(5000)
-        #         if (book[0].isalpha() or (book[0].isdigit() and int(book) >= 280)):
-        #             book_pages.append((book, page_num))
-        #             print(f"Row {i}: Book {book}, Page {page_num}")
-        #     except Exception as e:
-        #         print(f"Skipping row {i} due to error: {e}")
+        # Scope to the correct module only
+        sales_history_module = page.locator("div.DnnModule-ProValSalesHistory")
+        sales_rows = sales_history_module.locator("table.ui-widget-content.ui-table > tbody > tr")
+        print(f"Found {sales_rows.count()} rows in the sales table.")
+        book_pages = []
+        for i in range(sales_rows.count()):
+            row = sales_rows.nth(i)
+            try:
+                book = row.locator("td").nth(0).inner_text().strip()
+                page.wait_for_timeout(5000)
+                page_num = row.locator("td").nth(1).inner_text().strip()
+                page.wait_for_timeout(5000)
+                if (book[0].isalpha() or (book[0].isdigit() and int(book) >= 280)):
+                    book_pages.append((book, page_num))
+                    print(f"Row {i}: Book {book}, Page {page_num}")
+            except Exception as e:
+                print(f"Skipping row {i} due to error: {e}")
 
-        # # Step 8: Click Tax Info and save as PDF
-        # page.click("a[title='Tax Info']")
-        # print("Clicked on 'Tax Info', waiting for redirect...")
+        # Step 8: Click Tax Info and save as PDF
+        page.click("a[title='Tax Info']")
+        print("Clicked on 'Tax Info', waiting for redirect...")
 
-        # # Wait for navigation to the final /AccountSummary.aspx URL
-        # page.wait_for_url("**/AccountSummary.aspx**")
-        # page.wait_for_timeout(20000)
-        # tax_url = page.url
-        # save_pdf_from_url(tax_url, os.path.join(folder, "Tax Info.pdf"))
-        # print(f"Saved Tax Info PDF from {tax_url}")
+        # Wait for navigation to the final /AccountSummary.aspx URL
+        page.wait_for_url("**/AccountSummary.aspx**")
+        page.wait_for_timeout(20000)
+        tax_url = page.url
+        save_pdf_from_url(tax_url, os.path.join(folder, "Tax Info.pdf"))
+        print(f"Saved Tax Info PDF from {tax_url}")
 
-        book_pages = [("1247","453"),("0799","591"),("0310","940")]
        
         # Step 9-15: Go to Register of Deeds and download deeds
         for book, page_num in book_pages:
