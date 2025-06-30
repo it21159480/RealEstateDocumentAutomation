@@ -16,6 +16,28 @@ This project automates the process of navigating the Charleston County property 
 
 ---
 
+## 🔁 Steps Automated
+
+1. Navigate to Charleston County Online Services
+2. Click “Pay Taxes & View Records”
+3. Click “Real Property Record Search”
+4. Enter the TMS number (no dashes)
+5. Click “View Details” to access the property record
+6. Save the Property Card as a PDF
+7. Extract all Book and Page numbers from the Sales History
+8. Click “Tax Info” and save it as a PDF
+9. For each Book/Page:
+   - Open Register of Deeds search
+   - Enter Book and Page
+   - Agree to legal disclaimer
+   - Click “View”
+   - Save the opened deed document as a PDF
+10. Repeat for all listed transactions
+11. Save files under `output/Charleston/<TMS>/` folder
+
+---
+
+
 ## 📂 Project Structure
 
 ```
